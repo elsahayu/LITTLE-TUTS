@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "18_Elsa Hayuningrat",
+  "author": "Little Tuts",
   "editor": "wokwi",
   "parts": [
     {
@@ -17,22 +17,6 @@
       "left": -20,
       "attrs": {
         "pins": "i2c"
-      }
-    },
-    {
-      "type": "wokwi-dfplayer-mini",
-      "id": "dfp",
-      "top": -60,
-      "left": 260,
-      "attrs": {}
-    },
-    {
-      "type": "wokwi-buzzer",
-      "id": "spk",
-      "top": -140,
-      "left": 400,
-      "attrs": {
-        "volume": "0.1"
       }
     },
     {
@@ -151,15 +135,6 @@
       "rotate": 90,
       "attrs": {
         "value": "220"
-      }
-    },
-    {
-      "type": "wokwi-resistor",
-      "id": "rTX",
-      "top": -20,
-      "left": 200,
-      "attrs": {
-        "value": "1000"
       }
     }
   ],
@@ -318,48 +293,6 @@
       "lcd1:SCL",
       "esp:22",
       "purple",
-      []
-    ],
-    [
-      "dfp:VCC",
-      "esp:5V",
-      "red",
-      []
-    ],
-    [
-      "dfp:GND",
-      "esp:GND.1",
-      "black",
-      []
-    ],
-    [
-      "esp:17",
-      "rTX:1",
-      "orange",
-      []
-    ],
-    [
-      "rTX:2",
-      "dfp:RX",
-      "orange",
-      []
-    ],
-    [
-      "esp:16",
-      "dfp:TX",
-      "yellow",
-      []
-    ],
-    [
-      "dfp:SPK1",
-      "spk:1",
-      "gray",
-      []
-    ],
-    [
-      "dfp:SPK2",
-      "spk:2",
-      "gray",
       []
     ]
   ],
