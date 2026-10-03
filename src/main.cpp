@@ -192,7 +192,7 @@ void tahapAkhir() {
   digitalWrite(LED_GREEN, HIGH);
   tampil("Selamat! Tamat", "Skor Akhir: " + String(skor));
   putarSuara(SND_WIN);
-  delay(6000);                            // tahan 5-7 detik
+  delay(10000);                            //waktu
   ledOff();
   skor = 0;                               // reset -> loop() kembali ke Tahap 1
 }

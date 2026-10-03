@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "Little Tuts",
+  "author": "18_Elsa Hayuningrat",
   "editor": "wokwi",
   "parts": [
     {
@@ -26,7 +26,8 @@
       "left": -60,
       "attrs": {
         "color": "white",
-        "label": "Do"
+        "label": "Do",
+        "key": "a"
       }
     },
     {
@@ -36,7 +37,8 @@
       "left": 0,
       "attrs": {
         "color": "white",
-        "label": "Re"
+        "label": "Re",
+        "key": "s"
       }
     },
     {
@@ -46,7 +48,8 @@
       "left": 60,
       "attrs": {
         "color": "white",
-        "label": "Mi"
+        "label": "Mi",
+        "key": "d"
       }
     },
     {
@@ -56,7 +59,8 @@
       "left": 120,
       "attrs": {
         "color": "white",
-        "label": "Fa"
+        "label": "Fa",
+        "key": "f"
       }
     },
     {
@@ -66,7 +70,8 @@
       "left": 180,
       "attrs": {
         "color": "white",
-        "label": "Sol"
+        "label": "Sol",
+        "key": "g"
       }
     },
     {
@@ -76,7 +81,8 @@
       "left": 240,
       "attrs": {
         "color": "white",
-        "label": "La"
+        "label": "La",
+        "key": "h"
       }
     },
     {
@@ -86,7 +92,8 @@
       "left": 300,
       "attrs": {
         "color": "white",
-        "label": "Si"
+        "label": "Si",
+        "key": "j"
       }
     },
     {
@@ -96,7 +103,8 @@
       "left": 360,
       "attrs": {
         "color": "white",
-        "label": "Do2"
+        "label": "Do2",
+        "key": "k"
       }
     },
     {
