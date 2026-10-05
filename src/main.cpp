@@ -16,12 +16,15 @@ const uint8_t DF_TX = 17;   // ESP32 TX2 -> DFPlayer RX (lewat resistor 1k)
 // 001-008 = Do..Do' | 009 = kemenangan | 010-012 = chord
 const uint8_t SND_WIN = 9;
  
-// ---------- Pengaturan poin ----------
-const int JUMLAH_SOAL_NADA = 8;
-const int POIN_BENAR       = 20;
-const int POIN_SALAH       = 10;
-const int POIN_CHORD_BENAR = 50;
-const int POIN_CHORD_SALAH = 10;
+// ---------- Pengaturan level & poin ----------
+const int JUMLAH_SOAL_BEGINNER     = 5;    // Level 1: tebak nada + petunjuk "Tuts ke-n"
+const int JUMLAH_SOAL_INTERMEDIATE = 5;    // Level 2: tebak nada tanpa petunjuk
+// Level 3 (Advance): jumlah soal = jumlah chord di array CHORDS
+const int POIN_BEGINNER     = 10;
+const int POIN_INTERMEDIATE = 20;
+const int POIN_CHORD_BENAR  = 50;
+const int POIN_SALAH        = 10;          // salah di Level 1 & 2
+const int POIN_CHORD_SALAH  = 10;          // salah di Level 3
  
 // ---------- Pengaturan waktu (milidetik, 1000 = 1 detik) ----------
 // Saat alat dinyalakan (sekali)
@@ -31,10 +34,11 @@ const unsigned long WAKTU_SELAMAT_DATANG = 3000;   // "Selamat Datang di Little 
 // Standby
 const unsigned long SCROLL_MS            = 300;    // kecepatan teks berjalan
 const unsigned long WAKTU_SIAP           = 1500;   // "Siap-siap ya..."
-// Level 1
+// Layar pengantar tiap level (Level 1, 2, 3)
+const unsigned long WAKTU_LEVEL          = 2500;
+// Level 1 & 2 (tebak nada)
 const unsigned long JEDA_NADA            = 2000;   // setelah jari dilepas (BENAR/SALAH)
-// Level 2
-const unsigned long WAKTU_LEVEL2         = 2500;   // "Level 2: Chord!"
+// Level 3 (chord)
 const unsigned long BATAS_CHORD_MS       = 20000;  // maks waktu sejak tuts pertama sampai 3 tuts tertekan
 const unsigned long JEDA_CHORD           = 2500;   // setelah jari dilepas (BENAR/SALAH)
 // Skor akhir
@@ -136,13 +140,23 @@ void tahapStandby() {
   delay(WAKTU_SIAP);
 }
  
-// ---------- TAHAP 2: Level 1 tebak nada ----------
-void level1() {
-  for (int soal = 1; soal <= JUMLAH_SOAL_NADA; soal++) {
+// ---------- Layar pengantar level ----------
+void layarLevel(const char* baris1, const char* baris2) {
+  ledOff();
+  tampil(baris1, baris2);
+  delay(WAKTU_LEVEL);
+}
+ 
+// ---------- Tebak nada (dipakai Level 1 dan Level 2) ----------
+// tampilkanTuts = true  -> LCD menampilkan "Tuts ke-n" (petunjuk posisi)
+// tampilkanTuts = false -> tanpa petunjuk, hanya nomor soal dan skor
+void tebakNada(int jumlahSoal, int poinBenar, bool tampilkanTuts) {
+  for (int soal = 1; soal <= jumlahSoal; soal++) {
     int target = random(0, 8);
     ledOff();
     char info[20];
-    snprintf(info, sizeof(info), "%d/%d Skor:%d", soal, JUMLAH_SOAL_NADA, skor);
+    if (tampilkanTuts) snprintf(info, sizeof(info), "Tuts ke-%d   %d/%d", target + 1, soal, jumlahSoal);
+    else               snprintf(info, sizeof(info), "%d/%d Skor:%d", soal, jumlahSoal, skor);
     tampil(String("Tebak Nada: ") + NOTE_NAME[target], String(info));
  
     uint8_t m = tungguTekan();
@@ -150,8 +164,8 @@ void level1() {
  
     if (jawab == target) {
       digitalWrite(LED_GREEN, HIGH);
-      skor += POIN_BENAR;
-      tampil("BENAR! +" + String(POIN_BENAR), "Skor: " + String(skor));
+      skor += poinBenar;
+      tampil("BENAR! +" + String(poinBenar), "Skor: " + String(skor));
       putarSuara(target + 1);
     } else {
       digitalWrite(LED_RED, HIGH);
@@ -165,11 +179,21 @@ void level1() {
   }
 }
  
-// ---------- TAHAP 3: Level 2 chord ----------
-void level2() {
-  ledOff();
-  tampil("Level 2: Chord!", "Siapkan 3 jari..");
-  delay(WAKTU_LEVEL2);
+// ---------- LEVEL 1: Beginner (tebak nada, ada petunjuk tuts ke-n) ----------
+void levelBeginner() {
+  layarLevel("Level 1", "Beginner");
+  tebakNada(JUMLAH_SOAL_BEGINNER, POIN_BEGINNER, true);
+}
+ 
+// ---------- LEVEL 2: Intermediate (tebak nada, tanpa petunjuk) ----------
+void levelIntermediate() {
+  layarLevel("Level 2", "Intermediate");
+  tebakNada(JUMLAH_SOAL_INTERMEDIATE, POIN_INTERMEDIATE, false);
+}
+ 
+// ---------- LEVEL 3: Advance (tebak chord) ----------
+void levelAdvance() {
+  layarLevel("Level 3", "Advance: 3 jari!");
  
   for (int i = 0; i < JUMLAH_CHORD; i++) {
     const Chord& c = CHORDS[i];
@@ -258,8 +282,9 @@ void setup() {
  
 void loop() {
   tahapStandby();
-  level1();
-  level2();
+  levelBeginner();
+  levelIntermediate();
+  levelAdvance();
   tahapAkhir();
 }
  
