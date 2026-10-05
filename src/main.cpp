@@ -28,8 +28,8 @@ const int POIN_CHORD_SALAH  = 10;          // salah di Level 3
  
 // ---------- Pengaturan waktu (milidetik, 1000 = 1 detik) ----------
 // Saat alat dinyalakan (sekali)
-const unsigned long WAKTU_DFPLAYER_BOOT  = 1500;   // tunggu DFPlayer booting
-const unsigned long WAKTU_AUDIO_GAGAL    = 1500;   // pesan "Audio tidak ada"
+const unsigned long WAKTU_DFPLAYER_BOOT  = 1000;   // tunggu DFPlayer booting
+const unsigned long WAKTU_AUDIO_GAGAL    = 1000;   // pesan "Audio tidak ada"
 const unsigned long WAKTU_SELAMAT_DATANG = 3000;   // "Selamat Datang di Little Tuts!"
 // Standby
 const unsigned long SCROLL_MS            = 300;    // kecepatan teks berjalan
